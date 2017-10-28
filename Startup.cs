@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using core_sockets.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace core_sockets
 {
@@ -26,7 +28,7 @@ namespace core_sockets
         {
             // @TODO: Add postgsql connection contexts
             // https://damienbod.com/2016/01/11/asp-net-5-with-postgresql-and-entity-framework-7/
-            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<ApiContext>(options => options.UseInMemoryDatabase("ChatApp"));
             services.AddMvc();
             services.AddSwaggerGen(c => 
             {
@@ -41,12 +43,14 @@ namespace core_sockets
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMvc();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            app.UseMvc();
         }
     }
 }

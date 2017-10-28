@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace core_sockets.Controllers
 {
     // Route Token, named value from controller
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ValuesController : Controller
     {
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
-        {
+        {            
             return new string[] { "value1", "value2" };
         }
 
