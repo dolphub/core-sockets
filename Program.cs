@@ -18,9 +18,11 @@ namespace core_sockets
         }
 
         public static IWebHost BuildWebHost(string[] args) {
+            var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
+            port = String.IsNullOrEmpty(port) ? "5050" : port;
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:3004")
+                .UseUrls($"http://localhost:{port}")
                 .Build();
         }
     }
