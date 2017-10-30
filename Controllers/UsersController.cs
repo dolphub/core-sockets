@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using core_sockets.Models;
@@ -27,17 +28,21 @@ namespace core_sockets.Controllers
 
         // GET users/5
         [HttpGet("{id}", Name = "GetUser")]
-        public User Get(int id)
+        public IActionResult Get(string id)
         {
-            return _context.Users.FirstOrDefault(v => v.id == id);
+            var user = _context.Users.FirstOrDefault(v => v.id == id);
+            if (user == null) {
+                return NotFound("User not found");
+            }
+            return Ok(user);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]User user)
+        public IActionResult Post([FromBody][Required]User user)
         {
-            if (user == null) {
-                return BadRequest();
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
             _context.Users.Add(user);
             _context.SaveChanges();
