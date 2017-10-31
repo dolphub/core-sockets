@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using core_sockets.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace core_sockets.Controllers
 {
@@ -28,9 +29,9 @@ namespace core_sockets.Controllers
 
         // GET users/5
         [HttpGet("{id}", Name = "GetUser")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var user = _context.Users.FirstOrDefault(v => v.id == id);
+            var user = _context.Users.FirstOrDefaultAsync(v => v.id == id);
             if (user == null) {
                 return NotFound("User not found");
             }
@@ -39,12 +40,12 @@ namespace core_sockets.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody][Required]User user)
+        public async Task<IActionResult> Post([FromBody][Required]User user)
         {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
             _context.SaveChanges();
             return CreatedAtRoute("GetUser", new { id = user.id }, user);
         }

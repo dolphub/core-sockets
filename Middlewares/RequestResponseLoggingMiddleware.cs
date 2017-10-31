@@ -1,61 +1,33 @@
-// using Microsoft.AspNetCore.Http;
-// using Microsoft.Extensions.Logging;
-// using Microsoft.AspNetCore.Builder;
-// using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Builder;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
+using System;
 
-// namespace core_sockets.Middlewares
-// {
-//     public class RequestResponseLoggingMiddleware
-//     {
-//         private readonly RequestDelegate _next;
-//         private readonly ILogger _logger;
+namespace core_sockets.Middlewares
+{
+    public class ResponseTimeMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ResponseTimeMiddleware> _logger;
 
-//         public RequestResponseLoggingMiddleware(RequestDelegate next,
-//                                                 ILoggerFactory loggerFactory)
-//         {
-//             _next = next;
-//             _logger = loggerFactory
-//                       .CreateLogger<RequestResponseLoggingMiddleware>();
-//         }
+        public ResponseTimeMiddleware(RequestDelegate next, ILogger<ResponseTimeMiddleware> logger)
+        {
+            _next = next;
+            _logger = logger;
+        }
 
-//         public async Task Invoke(HttpContext context)
-//         {
-//             _logger.LogInformation(await FormatRequest(context.Request));
+        public async Task Invoke(HttpContext context)
+        {
+            var timer = new Stopwatch();
+            timer.Start();
+            await _next(context);
+            timer.Stop();
 
-//             var originalBodyStream = context.Response.Body;
+            _logger.LogWarning("The request took '{0}' ms", timer.ElapsedMilliseconds);
 
-//             using (var responseBody = new MemoryStream())
-//             {
-//                 context.Response.Body = responseBody;
-
-//                 await _next(context);
-
-//                 _logger.LogInformation(await FormatResponse(context.Response));
-//                 await responseBody.CopyToAsync(originalBodyStream);
-//             }
-//         }
-
-//         private static async Task<string> FormatRequest(HttpRequest request)
-//         {
-//             var body = request.Body;
-//             request.EnableRewind();
-//             var buffer = new byte[Convert.ToInt32(request.ContentLength)];
-//             await request.Body.ReadAsync(buffer, 0, buffer.Length);
-//             var bodyAsText = Encoding.UTF8.GetString(buffer);
-//             request.Body = body;
-
-//             var messageObjToLog = new { scheme = request.Scheme, host = request.Host, path = request.Path, queryString = request.Query, requestBody = bodyAsText };
-
-//             return JsonConvert.SerializeObject(messageObjToLog);
-//         }
-        
-//     }
-
-//     public static class RequestResponseLoggingMiddlewareExtensions
-//     {
-//         public static IApplicationBuilder UseRequestResponseLogging(this IApplicationBuilder builder)
-//         {
-//             return builder.UseMiddleware<RequestResponseLoggingMiddleware>();
-//         }
-//     }
-// }
+        }
+    }
+}

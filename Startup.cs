@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using core_sockets.Models;
 using Microsoft.EntityFrameworkCore;
-// using core_sockets.Middlewares;
+using core_sockets.Middlewares;
 
 namespace core_sockets
 {
@@ -44,10 +44,9 @@ namespace core_sockets
             {
                 app.UseDeveloperExceptionPage();
             }
-            // app.UseRequestResponseLogging();
-            // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            // loggerFactory.AddDebug();
-
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            app.UseMiddleware<ResponseTimeMiddleware>();
 
             app.UseMvc();
 
