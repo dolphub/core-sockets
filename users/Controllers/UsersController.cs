@@ -31,7 +31,7 @@ namespace core_sockets.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> Get(string id)
         {
-            var user = _context.Users.FirstOrDefaultAsync(v => v.id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(v => v.id == id);
             if (user == null) {
                 return NotFound("User not found");
             }
