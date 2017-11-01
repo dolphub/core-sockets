@@ -23,7 +23,7 @@ docker-compose up -d
 * If there are connection issues pulling images down
     * Open Docker settings
     * Navigate to Network
-    * re-apply google dnd server settings 8.8.8.8
+    * re-apply google dns server settings 8.8.8.8
 * If you see the error `Cannot create container for service <theservice>: Drive has not been shared`
     * Open Docker settings
     * Navigate to Shared Drives
