@@ -29,7 +29,9 @@ namespace core_sockets
         {
             // @TODO: Add postgsql connection contexts
             // https://damienbod.com/2016/01/11/asp-net-5-with-postgresql-and-entity-framework-7/
-            services.AddDbContext<ApiContext>(options => options.UseInMemoryDatabase("ChatApp"));
+            services.AddDbContext<ApiContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<ApiContext>(options => options.UseNpgsql("ChatApp"));
             services.AddMvc();
             services.AddSwaggerGen(c => 
             {

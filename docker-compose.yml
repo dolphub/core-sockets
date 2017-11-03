@@ -1,15 +1,24 @@
 version: '3'
 services:
-  users:
-    build: users/
-    ports:
-      - "3001:5001"
-    # @TODO: Pass configuration files through to appsettings / find best practice for this
+  # users:
+  #   build: users/
+  #   ports:
+  #     - "3001:5001"
+  #   # @TODO: Pass configuration files through to appsettings / find best practice for this
+  #   environment:
+  #     - ASPNETCORE_PORT=5001
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  # redis:
+  #   build: redis/
+  #   ports:
+  #     - "6379:6379"
+  postgres:
+    image: postgres:latest
     environment:
-      - ASPNETCORE_PORT=5001
-    depends_on:
-      - redis
-  redis:
-    build: redis/
+      - POSTGRES_USER:'root'
+      - POSTGRES_PASSWORD:'toor'
+      - POSTGRES_DB:'chat'
     ports:
-      - "6379:6379"
+      - '5432:5432'
