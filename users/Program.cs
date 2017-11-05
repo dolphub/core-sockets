@@ -19,7 +19,7 @@ namespace core_sockets
 
         public static IWebHost BuildWebHost(string[] args) {
             // @TODO listen on port passed through some common config
-            var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
+            var port = Environment.GetEnvironmentVariable("PORT");
             port = String.IsNullOrEmpty(port) ? "5050" : port;
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()

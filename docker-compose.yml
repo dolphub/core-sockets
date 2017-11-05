@@ -6,7 +6,8 @@ services:
       - "3001:5001"
   #   # @TODO: Pass configuration files through to appsettings / find best practice for this
     environment:
-      - ASPNETCORE_PORT=5001
+      - PORT=5001
+      - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
     depends_on:
       - redis
       - postgres
@@ -20,7 +21,5 @@ services:
       - POSTGRES_USER=userapp
       - POSTGRES_PASSWORD=abc123
       - POSTGRES_DB=chat
-      # See if we can override appsetting connection strings as an env var
-      # - ConnectionStrings:DefaultConnection=Host=postgres;
     ports:
       - '5432:5432'
