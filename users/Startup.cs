@@ -17,9 +17,15 @@ namespace core_sockets
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -27,16 +33,14 @@ namespace core_sockets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // @TODO: Add postgsql connection contexts
-            // https://damienbod.com/2016/01/11/asp-net-5-with-postgresql-and-entity-framework-7/
             services.AddDbContext<ApiContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            // services.AddDbContext<ApiContext>(options => options.UseNpgsql("ChatApp"));
             services.AddMvc();
             services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new Info { Title = "SocketChat Api", Version = "v1"});
             });
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
