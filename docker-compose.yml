@@ -4,7 +4,6 @@ services:
     build: users/
     ports:
       - "3001:5001"
-  #   # @TODO: Pass configuration files through to appsettings / find best practice for this
     environment:
       - PORT=5001
       - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
