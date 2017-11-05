@@ -10,4 +10,11 @@ RUN dotnet restore
 
 EXPOSE 5000
 
+# Update database tables from migrations
+# CMD ls
+# CMD dotnet ef database update
+# CMD which dotnet ef
+
+# CMD [ "dotnet", "restore"]
+# CMD [ "dotnet-ef", "database", "update" ]
 ENTRYPOINT [ "dotnet", "run" ]
