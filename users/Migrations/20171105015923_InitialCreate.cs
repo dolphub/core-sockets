@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace coresockets.Migrations
 {
-    public partial class UsersMigration_1 : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

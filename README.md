@@ -19,6 +19,13 @@ docker-compose up
 docker-compose up -d
 ```
 
+## Create Databases
+### Users
+Navigate to `./users` and ensure databases are updated through migrations with dotnetcore cli
+```
+dotnetcore ef database update
+```
+
 #### Windows 10 issues
 * If there are connection issues pulling images down
     * Open Docker settings

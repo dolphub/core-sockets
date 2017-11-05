@@ -11,8 +11,8 @@ using System;
 namespace coresockets.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20171103204818_UsersMigration_1")]
-    partial class UsersMigration_1
+    [Migration("20171105015923_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
