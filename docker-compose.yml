@@ -1,19 +1,30 @@
 version: '3'
 services:
-  users:
-    build: users/
+  # users:
+  #   build: users/
+  #   ports:
+  #     - "3001:5001"
+  #   environment:
+  #     - PORT=5001
+  #     - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
+  #   depends_on:
+  #     - "postgres"
+  # redis:
+  #   build: redis/
+  #   ports:
+  #     - "6379:6379"
+  users_node:
+    build: users_node/
     ports:
-      - "3001:5001"
+      - "3002:80"
     environment:
-      - PORT=5001
-      - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
+      - DB_HOST=postgres
+      - DB_USER=userapp
+      - DB_NAME=chat
+      - DB_PASSWORD=abc123
     depends_on:
-      - redis
+    # https://docs.docker.com/compose/startup-order/
       - postgres
-  redis:
-    build: redis/
-    ports:
-      - "6379:6379"
   postgres:
     image: postgres:latest
     environment:

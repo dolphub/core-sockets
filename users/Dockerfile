@@ -15,4 +15,4 @@ EXPOSE 5000
 # CMD dotnet ef database update
 # CMD which dotnet ef
 
-ENTRYPOINT /bin/bash -c "dotnet ef database update -v && dotnet run"
+ENTRYPOINT /bin/bash -c "dotnet ef database update && dotnet run"
