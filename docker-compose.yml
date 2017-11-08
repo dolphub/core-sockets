@@ -25,6 +25,7 @@ services:
     depends_on:
     # https://docs.docker.com/compose/startup-order/
       - postgres
+    command: ["./postgres/wait.sh", "postgres", "node", "./users_node/index.js"]
   postgres:
     image: postgres:latest
     environment:
