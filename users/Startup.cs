@@ -12,6 +12,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using core_sockets.Models;
 using Microsoft.EntityFrameworkCore;
 using core_sockets.Middlewares;
+using core_sockets.Ipc;
 
 namespace core_sockets
 {
@@ -41,6 +42,7 @@ namespace core_sockets
                 c.SwaggerDoc("v1", new Info { Title = "SocketChat Api", Version = "v1"});
             });
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IEventBus>(new Ipc.EventBus());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

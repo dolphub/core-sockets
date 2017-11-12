@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using core_sockets.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using core_sockets.Ipc;
 
 namespace core_sockets.Controllers
 {
@@ -13,12 +14,14 @@ namespace core_sockets.Controllers
     [Route("[controller]")]
     public class UsersController : Controller
     {
-        public UsersController(ApiContext context)
+        public UsersController(ApiContext context, IEventBus eventBus)
         {
             _context = context;
+            _eventBus = eventBus;
         }
 
         private readonly ApiContext _context;
+        private readonly IEventBus _eventBus;
 
         // GET api/values
         [HttpGet]
@@ -47,6 +50,7 @@ namespace core_sockets.Controllers
             }
             await _context.Users.AddAsync(user);
             _context.SaveChanges();
+            await _eventBus.publish($"New User created, {user.id}", "users.created");
             return CreatedAtRoute("GetUser", new { id = user.id }, user);
         }
 

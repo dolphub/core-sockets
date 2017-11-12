@@ -7,25 +7,22 @@ services:
   #   environment:
   #     - PORT=5001
   #     - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
+  #     - RABBITMQ_USER=userapp
+  #     - RABBITMQ_PASSWORD=abc123
   #   depends_on:
   #     - "postgres"
   # redis:
   #   build: redis/
   #   ports:
   #     - "6379:6379"
-  users_node:
-    build: users_node/
-    ports:
-      - "3002:80"
+  rabbit:
+    image: rabbitmq:3-management
     environment:
-      - DB_HOST=postgres
-      - DB_USER=userapp
-      - DB_NAME=chat
-      - DB_PASSWORD=abc123
-    depends_on:
-    # https://docs.docker.com/compose/startup-order/
-      - postgres
-    command: ["./postgres/wait.sh", "postgres", "node", "./users_node/index.js"]
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=abc123
+    ports:
+      - "15672:15672"
+      - "5672:5672"
   postgres:
     image: postgres:latest
     environment:
