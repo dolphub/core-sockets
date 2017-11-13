@@ -42,7 +42,7 @@ namespace core_sockets
                 c.SwaggerDoc("v1", new Info { Title = "SocketChat Api", Version = "v1"});
             });
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton<IEventBus>(new Ipc.EventBus());
+            services.AddSingleton<IEventBus, Ipc.EventBus>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

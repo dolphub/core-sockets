@@ -50,7 +50,7 @@ namespace core_sockets.Controllers
             }
             await _context.Users.AddAsync(user);
             _context.SaveChanges();
-            await _eventBus.publish($"New User created, {user.id}", "users.created");
+            _eventBus.publish($"New User created, {user.id}", "users.created");
             return CreatedAtRoute("GetUser", new { id = user.id }, user);
         }
 
