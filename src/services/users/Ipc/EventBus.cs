@@ -13,6 +13,7 @@ namespace core_sockets.Ipc
             var user = amqpConfig.GetValue("User", "user");
             var password = amqpConfig.GetValue("Password", "password");
             exchange = amqpConfig.GetValue("Exchange", "hub");
+            Console.WriteLine("HOST>>>" + host + user + password);
             var factory = new ConnectionFactory() { 
                 HostName = host,
                 Password = password,
