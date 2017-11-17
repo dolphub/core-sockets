@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using core_sockets.Models;
+using Users.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using core_sockets.Ipc;
+using Libs.Ipc;
 
-namespace core_sockets.Controllers
+namespace Users.Controllers
 {
     // Route Token, named value from controller
     [Route("[controller]")]
@@ -26,7 +26,7 @@ namespace core_sockets.Controllers
         // GET api/values
         [HttpGet]
         public IEnumerable<User> Get()
-        {            
+        {
             return _context.Users.ToList();
         }
 

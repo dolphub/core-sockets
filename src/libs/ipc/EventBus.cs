@@ -1,28 +1,23 @@
-using System;
+﻿using System;
 using RabbitMQ.Client;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
-namespace core_sockets.Ipc
+namespace Libs.Ipc
 {
     public class EventBus : IEventBus
     {
-        public EventBus(IConfiguration configuration) {
-            var amqpConfig = configuration.GetSection("EventBusConfig");
-            var host = amqpConfig.GetValue("Host", "localhost");
-            var user = amqpConfig.GetValue("User", "user");
-            var password = amqpConfig.GetValue("Password", "password");
-            exchange = amqpConfig.GetValue("Exchange", "hub");
-            Console.WriteLine("HOST>>>" + host + user + password);
+        public EventBus(string host, string user, string password, string exchangeName) {
+            Console.WriteLine("Libs.Ipc.EventBus: New - " + host + user + password);
             var factory = new ConnectionFactory() { 
                 HostName = host,
                 Password = password,
                 UserName = user
             };
+            exchange = exchangeName;
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.ExchangeDeclare(exchange, ExchangeType.Topic);
             // https://www.rabbitmq.com/dotnet-api-guide.html
+            // @TODO: Close amqp connection
         }
 
         private readonly IConnection connection;
