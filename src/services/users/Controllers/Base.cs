@@ -4,10 +4,10 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using core_sockets.Models;
+using Users.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace core_sockets.Controllers
+namespace Users.Controllers
 {
     // Route Token, named value from controller
     [Route("/")]

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace core_sockets.Ipc
+namespace Libs.Ipc
 {
     public interface IEventBus
     {

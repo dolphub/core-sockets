@@ -1,18 +1,18 @@
 version: '3'
 services:
-  users:
-    build: src/services/users/
-    ports:
-      - "3001:5001"
-    environment:
-      - PORT=5001
-      - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
-      - EventBusConfig__HOST=rabbit
-      - EventBusConfig__USER=user
-      - EventBusConfig__PASSWORD=abc123
-    depends_on:
-      - "postgres"
-      - "rabbit"
+  # users:
+  #   build: src/services/users/
+  #   ports:
+  #     - "3001:5001"
+  #   environment:
+  #     - PORT=5001
+  #     - ConnectionStrings__DefaultConnection=Username=userapp;Password=abc123;Host=postgres;Port=5432;Database=chat;Pooling=true;
+  #     - EventBusConfig__HOST=rabbit
+  #     - EventBusConfig__USER=user
+  #     - EventBusConfig__PASSWORD=abc123
+  #   depends_on:
+  #     - "postgres"
+  #     - "rabbit"
   # redis:
   #   build: src/components/redis/
   #   ports:

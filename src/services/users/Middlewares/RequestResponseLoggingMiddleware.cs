@@ -6,7 +6,7 @@ using System.IO;
 using System.Diagnostics;
 using System;
 
-namespace core_sockets.Middlewares
+namespace Users.Middlewares
 {
     public class ResponseTimeMiddleware
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace coresockets.Migrations
+namespace Users.Migrations
 {
     public partial class InitialCreate : Migration
     {
