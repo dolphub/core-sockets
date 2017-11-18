@@ -53,7 +53,7 @@ namespace Users
             {
                 app.UseDeveloperExceptionPage();
             }
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));;
             loggerFactory.AddDebug();
             app.UseMiddleware<ResponseTimeMiddleware>();
 
