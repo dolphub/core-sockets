@@ -26,33 +26,23 @@ namespace Users
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-            appConfig = new AppConfiguration(builder.Build());
-            
+            Configuration = builder.Build();            
         }
 
-        public IAppConfiguration appConfig { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApiContext>(options =>
-                options.UseNpgsql(appConfig.getDatabaseConfig()));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<EventBusConfig>(Configuration.GetSection("EventBusConfig"));
             services.AddMvc();
             services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new Info { Title = "SocketChat Api", Version = "v1"});
             });
-            services.AddSingleton<IAppConfiguration>(appConfig);
-            var amqpConfig = appConfig.getAmqpConfiguration();
-            Console.WriteLine(">>>> " + amqpConfig);
-            IEventBus eventBus = new EventBus(
-                amqpConfig.host,
-                amqpConfig.user,
-                amqpConfig.password,
-                amqpConfig.exchange
-            );
+
             services.AddSingleton<IEventBus, EventBus>();
         }
 
