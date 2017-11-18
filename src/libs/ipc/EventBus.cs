@@ -31,5 +31,21 @@ namespace Libs.Ipc
             channel.BasicPublish(exchange, routingKey, false, null, payload);
             Console.WriteLine($"Publishing message: {message} on routingKey: {routingKey}");
         }
+
+        // Register Event Callback: https://stackoverflow.com/questions/2082615/pass-method-as-parameter-using-c-sharp
+        public void registerConsumer() {
+            //
+        }
+        /**
+         * Basic consumer, register delegate for callback on received for this channel
+         */
+        // var consumer = new EventingBasicConsumer(channel);
+        // consumer.Received += (ch, ea) =>
+        //         {
+        //             var body = ea.Body;
+        //             // ... process the message
+        //             channel.BasicAck(ea.DeliveryTag, false);
+        //         };
+        // String consumerTag = channel.BasicConsume(queueName, false, consumer);
     }
 }

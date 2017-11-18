@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using Users.Models;
 using Microsoft.EntityFrameworkCore;
-using Users.Middlewares;
 using Libs.Ipc;
 
-namespace Users
+namespace Chat
 {
     public class Startup
     {
@@ -25,7 +23,7 @@ namespace Users
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build();            
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,15 +31,8 @@ namespace Users
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApiContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.Configure<EventBusConfig>(Configuration.GetSection("EventBusConfig"));
             services.AddMvc();
-            services.AddSwaggerGen(c => 
-            {
-                c.SwaggerDoc("v1", new Info { Title = "SocketChat Api", Version = "v1"});
-            });
-
             services.AddSingleton<IEventBus, EventBus>();
         }
 
@@ -54,15 +45,8 @@ namespace Users
             }
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));;
             loggerFactory.AddDebug();
-            app.UseMiddleware<ResponseTimeMiddleware>();
 
             app.UseMvc();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
         }
     }
 }
