@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Chat.Events;
 using Libs.Ipc;
 
 namespace Chat
@@ -34,6 +35,7 @@ namespace Chat
             services.Configure<EventBusConfig>(Configuration.GetSection("EventBusConfig"));
             services.AddMvc();
             services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<NewUserEvent>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +47,9 @@ namespace Chat
             }
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));;
             loggerFactory.AddDebug();
+
+            // Warm up events
+            app.ApplicationServices.GetService<NewUserEvent>();
 
             app.UseMvc();
         }

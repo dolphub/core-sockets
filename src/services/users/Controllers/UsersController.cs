@@ -50,7 +50,7 @@ namespace Users.Controllers
             }
             await _context.Users.AddAsync(user);
             _context.SaveChanges();
-            _eventBus.publish($"New User created, {user.id}", "users.created");
+            _eventBus.publish(user.id, "user.created");
             return CreatedAtRoute("GetUser", new { id = user.id }, user);
         }
 
