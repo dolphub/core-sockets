@@ -1,4 +1,5 @@
 # .NET Core Scaling Microservices
+[<img src="https://dolphub.visualstudio.com/_apis/public/build/definitions/0b4aa86d-e81f-4cd0-8fd3-adc64f1cea24/3/badge"/>](https://dolphub.visualstudio.com/CoreChat/_build/index?definitionId=1)
 
 ## Development with Docker
 
